@@ -76,6 +76,7 @@ func Signin(w http.ResponseWriter, r *http.Request) {
 		Name:    "session_token",
 		Value:   sessionToken,
 		Expires: time.Now().Add(120 * time.Second),
+		SameSite: http.SameSiteStrictMode,
 	})
 	fmt.Fprintf(w, "You did it! This app is so secure!")
 }
@@ -164,5 +165,6 @@ func Refresh(w http.ResponseWriter, r *http.Request) {
 		Name:    "session_token",
 		Value:   newSessionToken,
 		Expires: time.Now().Add(120 * time.Second),
+		SameSite: http.SameSiteStrictMode,
 	})
 }
