@@ -1,14 +1,20 @@
 package main
 
 import (
+	"database/sql"
+	"fmt"
 	"log"
 	"net/http"
-	// "github.com/gorilla/mux"
+
 	"github.com/gomodule/redigo/redis"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 // Store the redis connection as a package level variable
 var cache redis.Conn
+var db *sql.DB
+
+const port = ":8000"
 
 func main() {
 	initCache()
@@ -16,10 +22,15 @@ func main() {
 	// "Signin" and "Welcome" are the handlers that we will implement
 	http.HandleFunc("/", Root)
 	http.HandleFunc("/signin", Signin)
+	http.HandleFunc("/signup", Signup)
 	http.HandleFunc("/welcome", Welcome)
 	http.HandleFunc("/refresh", Refresh)
+
+	initDB()
+	defer db.Close()
 	// start the server on port 8000
-	log.Fatal(http.ListenAndServe(":8000", nil))
+	fmt.Printf("It's alive!!! Check localhost%s\n", port)
+	log.Fatal(http.ListenAndServe(port, nil))
 }
 
 func initCache() {
@@ -30,4 +41,14 @@ func initCache() {
 	}
 	// Assign the connection to the package level `cache` variable
 	cache = conn
+}
+
+func initDB() {
+	var err error
+	// Connect to the sqlite3 db
+	//you might have to change the connection string to add your database credentials
+	db, err = sql.Open("sqlite3", "./users.db")
+	if err != nil {
+		panic(err)
+	}
 }
