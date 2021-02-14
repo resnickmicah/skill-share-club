@@ -3,3 +3,6 @@ skill-share-club
 
 # Mac crap
 .DS_Store
+
+# Database file
+*.db
