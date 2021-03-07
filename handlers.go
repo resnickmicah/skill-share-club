@@ -101,11 +101,7 @@ func Signin(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Create a new random session token
-	u, err := uuid.NewV4()
-	if err != nil {
-		fmt.Printf("Something went wrong: %s", err)
-		return
-	}
+	u := uuid.NewV4()
 	sessionToken := u.String()
 	// Set the token in the cache, along with the user whom it represents
 	// The token has an expiry time of 120 seconds
@@ -187,11 +183,7 @@ func Refresh(w http.ResponseWriter, r *http.Request) {
 	// The code uptil this point is the same as the first part of the `Welcome` route
 
 	// Now, create a new session token for the current user
-	u, err := uuid.NewV4()
-	if err != nil {
-		fmt.Printf("Something went wrong: %s", err)
-		return
-	}
+	u := uuid.NewV4()
 	newSessionToken := u.String()
 	_, err = cache.Do("SETEX", newSessionToken, "120", fmt.Sprintf("%s", response))
 	if err != nil {

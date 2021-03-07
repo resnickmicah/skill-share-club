@@ -7,7 +7,8 @@ import (
 	"net/http"
 
 	"github.com/gomodule/redigo/redis"
-	_ "github.com/mattn/go-sqlite3"
+	// _ "github.com/jackc/pgx/v4/stdlib"
+	_ "github.com/lib/pq"
 )
 
 // Store the redis connection as a package level variable
@@ -45,10 +46,11 @@ func initCache() {
 
 func initDB() {
 	var err error
-	// Connect to the sqlite3 db
+	// Connect to the postgres db
 	//you might have to change the connection string to add your database credentials
-	db, err = sql.Open("sqlite3", "./users.db")
+	db, err = sql.Open("postgres", "dbname=skill-share-club sslmode=disable")
 	if err != nil {
 		panic(err)
 	}
+	println("Successfully connected to postgres!")
 }
