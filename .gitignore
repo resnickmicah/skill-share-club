@@ -6,3 +6,6 @@ skill-share-club
 
 # Database file
 *.db
+
+./frontend/yarn.lock
+./frontend/node_modules
