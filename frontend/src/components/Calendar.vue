@@ -14,7 +14,6 @@
           @click:date="heck"
         ></v-calendar>
       </v-sheet>
-      <p>The button above has been clicked {{ counter }} times.</p>
     </v-col>
   </v-row>
   
@@ -25,7 +24,6 @@ export default {
   methods: {
     heck: function (event) {
       console.log(event)
-      // debugger;
       let newEvent = prompt(`Do you want to add an event to ${event.date}?`)
       console.log(this.events)
       this.events.push({
@@ -37,10 +35,6 @@ export default {
   },
   data: () => ({
     today: "2021-05-04",
-    counter: "",
-    // heck: function (event) {
-    //   alert("heck");
-    // },
     events: [
       {
         name: "pair programming",
